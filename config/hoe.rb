@@ -2,7 +2,7 @@ require 'stump/version'
 
 AUTHOR = 'Jeremy McAnally'  # can also be an array of Authors
 EMAIL = "jeremy@entp.com"
-DESCRIPTION = "description of gem"
+DESCRIPTION = "Stubbing and mocking that isn't painful."
 GEM_NAME = 'stump' # what ppl will type to install your gem
 RUBYFORGE_PROJECT = 'stump' # The unix name for your project
 HOMEPATH = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
