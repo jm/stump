@@ -36,25 +36,22 @@ class Object
   def proxy!(method, options = {}, &block)
     Stump::Mocks.add([self, method])
     
+    if respond_to?(method)
+      proxy_existing_method(method, options, &block)
+    else
+      proxy_missing_method(method, options, &block)
+    end
+  end
+  
+  protected
+  def proxy_existing_method(method, options = {}, &block)
     method_alias = "__old_#{method}"
     
     meta_eval do
       module_eval("alias #{method_alias} #{method}")
     end
         
-    behavior = unless options[:return]
-                  lambda do |*args| 
-                    raise ArgumentError if args.length != method(method_alias.to_sym).arity
-
-                    Stump::Mocks.verify([self, method])
-                    
-                    if method(method_alias.to_sym).arity == 0
-                      return send(method_alias)
-                    else
-                      return send(method_alias, *args)
-                    end
-                  end
-                else
+    behavior = if options[:return]
                   lambda do |*args| 
                     raise ArgumentError if args.length != method(method_alias.to_sym).arity
                     
@@ -68,8 +65,39 @@ class Object
 
                     return options[:return]
                   end
+                else
+                  lambda do |*args| 
+                    raise ArgumentError if args.length != method(method_alias.to_sym).arity
+
+                    Stump::Mocks.verify([self, method])
+                    
+                    if method(method_alias.to_sym).arity == 0
+                      return send(method_alias)
+                    else
+                      return send(method_alias, *args)
+                    end
+                  end
                 end
 
+    meta_def method, &behavior
+  end
+  
+  def proxy_missing_method(method, options = {}, &block)
+    behavior = if options[:return]
+                  lambda do |*args|
+                    Stump::Mocks.verify([self, method])
+                    
+                    method_missing(method, args)
+                    return options[:return]
+                  end
+                else
+                  lambda do |*args|
+                    Stump::Mocks.verify([self, method])
+      
+                    method_missing(method, args)
+                  end
+                end
+    
     meta_def method, &behavior
   end
 end
