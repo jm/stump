@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
     "lib/stump/mock.rb",
     "lib/stump/mocks.rb",
     "lib/stump/stub.rb",
+    "lib/stump/proxy.rb",
     "lib/stump/version.rb",
     "lib/stump/core_ext/test_case.rb",
     "setup.rb"
