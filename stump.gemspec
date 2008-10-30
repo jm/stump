@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name     = "stump"
-  s.version  = "0.0.1"
-  s.date     = "2008-10-07"
+  s.version  = "0.0.2"
+  s.date     = "2008-10-30"
   s.summary  = "Stubbing and mocking that isn't painful."
   s.email    = "jeremy@entp.com"
   s.homepage = "http://github.com/jeremymcanally/stump"
