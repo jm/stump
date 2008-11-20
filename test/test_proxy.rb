@@ -52,6 +52,20 @@ class TestProxy < Test::Unit::TestCase
     end
   end
 
+  def test_proxy_optional_args_are_not_required
+    proxied = MyStump.new
+    proxied.proxy!(:branch)
+    
+    assert_raise ArgumentError do
+      proxied.branch
+    end
+    
+    assert_nothing_raised do
+      assert_equal 3, proxied.branch(3)
+      assert_equal 6, proxied.branch(3, 2)
+    end
+  end
+  
   def test_proxy_fail
     stumply = MyStump.new
     stumply.proxy!(:tree, :return => "hi")

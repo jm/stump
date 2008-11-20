@@ -50,10 +50,22 @@ class Object
     meta_eval do
       module_eval("alias #{method_alias} #{method}")
     end
-        
+    
+    check_arity = Proc.new do |args|
+      arity = method(method_alias.to_sym).arity
+      if ((arity >= 0) ?
+          (args.length != arity) :
+          (args.length < ~arity))
+        # Negative arity means some params are optional, so we check
+        # for the minimum required.  Sadly, we can't tell what the
+        # maximum is.
+        raise ArgumentError
+      end
+    end
+    
     behavior = if options[:return]
                   lambda do |*args| 
-                    raise ArgumentError if args.length != method(method_alias.to_sym).arity
+                    check_arity.call(args)
                     
                     Stump::Mocks.verify([self, method])
 
@@ -67,7 +79,7 @@ class Object
                   end
                 else
                   lambda do |*args| 
-                    raise ArgumentError if args.length != method(method_alias.to_sym).arity
+                    check_arity.call(args)
 
                     Stump::Mocks.verify([self, method])
                     

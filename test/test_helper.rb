@@ -9,4 +9,8 @@ class MyStump
   def trunk(name)
     return name.upcase
   end
+  
+  def branch(factor, initial = 1)
+    return factor * initial
+  end
 end
