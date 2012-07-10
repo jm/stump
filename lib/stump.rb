@@ -2,14 +2,7 @@ unless defined?(Motion::Project::Config)
   raise "This file must be required within a RubyMotion project Rakefile."
 end
 
-require 'stump/version'
-require 'stump/metaid'
-require 'stump/core_ext/test_case'
-
-require 'stump/stub'
-require 'stump/mocks'
-require 'stump/mock'
-require 'stump/proxy'
+require 'motion-define-method'
 
 Motion::Project::App.setup do |app|
   [

@@ -13,6 +13,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version = Stump::VERSION
 
+  gem.add_dependency 'motion-define-method'
   gem.add_development_dependency 'motion-redgreen'
   gem.add_development_dependency 'rake'
 end
