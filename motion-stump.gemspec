@@ -1,0 +1,18 @@
+require File.expand_path('../lib/stump/version', __FILE__)
+
+Gem::Specification.new do |gem|
+  gem.authors = ["Francis Chong"]
+  gem.email = ["francis@ignition.hk"]
+  gem.description = "Stubbing and mocking for RubyMotion"
+  gem.summary = "Stubbing and mocking for RubyMotion"
+  gem.homepage = "https://github.com/siuying/stump"
+
+  gem.files = `git ls-files`.split($\)
+  gem.test_files = gem.files.grep(%r{^(test|spec|lib_spec|features)/})
+  gem.name = "motion-stump"
+  gem.require_paths = ["lib"]
+  gem.version = Stump::VERSION
+
+  gem.add_development_dependency 'motion-redgreen'
+  gem.add_development_dependency 'rake'
+end
