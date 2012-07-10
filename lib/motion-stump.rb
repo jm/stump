@@ -12,8 +12,7 @@ Motion::Project::App.setup do |app|
       'stump/stub.rb',
       'stump/mocks.rb',
       'stump/mock.rb',
-      'stump/proxy.rb',
-      'stump/baconize.rb'
+      'stump/proxy.rb'
     ].collect {|f| File.join(File.dirname(__FILE__), f) }
     .reverse
     .each {|f| app.files.unshift(f) }

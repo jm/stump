@@ -2,6 +2,10 @@ module Stump
   # A class to track the mocks and proxies that have been satisfied
   class Mocks
     class <<self
+      def size
+        @mocks ? 0 : @mocks.size 
+      end
+
       def add(mock)
         @mocks ||= []
         @mocks << mock

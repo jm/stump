@@ -12,7 +12,7 @@ end
 
 desc "Build the gem"
 task :gem do
-  sh "bundle exec gem build motion-define-method.gemspec"
+  sh "bundle exec gem build motion-stump.gemspec"
   sh "mkdir -p pkg"
   sh "mv *.gem pkg/"
 end
