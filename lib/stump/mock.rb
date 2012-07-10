@@ -21,7 +21,7 @@ class Object
                     raise ArgumentError if block.arity >= 0 && args.length != block.arity
                     
                     Stump::Mocks.verify([self, method])
-                    block.call(args)
+                    block.call(*args)
                   end
                 else
                   lambda do |*args|                     
