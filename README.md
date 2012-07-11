@@ -34,8 +34,12 @@ my_object.mock!(:tancy, :return => "ooo fancy!")
 ```ruby
 my_mock = mock(:hello, :return => "what fun is this?")
 my_mock.hello   # => "what fun is this?"
-Proxying objects.
+```
 
+
+### Proxying objects
+
+```ruby
 class Greeting
   def bonjour
     "Bonjour!"
@@ -50,7 +54,7 @@ greet_you = Greeting.new
 greet_you.proxy!(:bonjour)
 
 # finish test...
-# ! Unmet expectations: #<Greeting:0x371d24> expected hello
+# ! Unmet expectations: #<Greeting:0x371d24> expected bonjour
 ```
 
 ## Installation
