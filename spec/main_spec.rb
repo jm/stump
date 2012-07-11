@@ -22,12 +22,13 @@ describe "Application 'stump-test'" do
     my_object.mock!(:fancy, :return => "ooo fancy!")
     my_object.mock!(:tancy, :return => "ooo tancy!")
     my_object.fancy.should == 'ooo fancy!'
+    my_object.tancy.should == 'ooo tancy!'
   end
 
-  # it "should create pure mock" do 
-  #   my_mock = mock(:hello, :return => "what fun is this?")
-  #   my_mock.hello.should == "what fun is this?"
-  # end
+  it "should create pure mock" do 
+    my_mock = mock(:hello, :return => "what fun is this?")
+    my_mock.hello.should == "what fun is this?"
+  end
 
   # class Greeting
   #   def bonjour
