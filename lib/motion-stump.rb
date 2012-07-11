@@ -13,8 +13,6 @@ module Motion; module Project;
   end
 end; end
 
-## Include supports for define_method
-require 'motion-define-method'
 
 ## Include stump in dev mode
 Motion::Project::App.setup do |app|
@@ -29,3 +27,6 @@ Motion::Project::App.setup do |app|
     ].reverse.each {|f| app.files.unshift(f) }
   end
 end
+
+## Include supports for define_method
+require 'motion-define-method'
