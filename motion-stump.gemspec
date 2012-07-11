@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.email = ["francis@ignition.hk"]
   gem.description = "Stubbing and mocking for RubyMotion"
   gem.summary = "Stubbing and mocking for RubyMotion"
-  gem.homepage = "https://github.com/siuying/stump"
+  gem.homepage = "https://github.com/siuying/motion-stump"
 
   gem.files = `git ls-files`.split($\)
   gem.test_files = gem.files.grep(%r{^(test|spec|lib_spec|features)/})
