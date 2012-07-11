@@ -37,26 +37,6 @@ my_mock.hello   # => "what fun is this?"
 ```
 
 
-### Proxying objects
-
-```ruby
-class Greeting
-  def bonjour
-    "Bonjour!"
-  end
-end
-
-greet_me = Greeting.new
-greet_me.proxy!(:bonjour)
-greet_me.bonjour  # => "Bonjour!"
-
-greet_you = Greeting.new
-greet_you.proxy!(:bonjour)
-
-# finish test...
-# ! Unmet expectations: #<Greeting:0x371d24> expected bonjour
-```
-
 ## Installation
 
 ```ruby
