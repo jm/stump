@@ -1,6 +1,6 @@
 # motion-stump
 
-Stubbing and mocking for RubyMotion.
+Stubbing and mocking for RubyMotion. Based on Jeremy McAnally's [stump](https://github.com/jm/stump) library.
 
 ## Features
 
