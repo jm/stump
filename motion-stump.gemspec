@@ -14,6 +14,6 @@ Gem::Specification.new do |gem|
   gem.version = Stump::VERSION
 
   gem.add_dependency 'motion-define-method', '~> 0.1.2'
-  gem.add_development_dependency 'motion-define-method', '~> 0.1.0'
+  gem.add_development_dependency 'motion-redgreen', '~> 0.1.0'
   gem.add_development_dependency 'rake'
 end
