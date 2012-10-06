@@ -27,6 +27,3 @@ Motion::Project::App.setup do |app|
     ].reverse.each {|f| app.files.unshift(f) }
   end
 end
-
-## Include supports for define_method
-require 'motion-define-method'

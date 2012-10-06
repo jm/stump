@@ -39,6 +39,8 @@ my_mock.hello   # => "what fun is this?"
 
 ## Installation
 
+**Requires RubyMotion 1.25**
+
 ```ruby
 gem install 'motion-stump'
 ```

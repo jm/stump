@@ -2,9 +2,11 @@
 require "bundler/gem_tasks"
 
 $:.unshift("/Library/RubyMotion/lib")
+
 require 'motion/project'
 require 'bundler'
-Bundler.require :default, :development
+Bundler.setup :default, :development
+require 'motion-stump'
 
 Motion::Project::App.setup do |app|
   app.name = 'motion-stump'
