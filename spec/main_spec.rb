@@ -1,5 +1,12 @@
 describe "Application 'stump-test'" do
   class Hello
+    def self.append_to_string(name, to_append, &block)
+      block.call(name + to_append)
+    end
+
+    def self.two_greetings(&block)
+      block.call("hello", "hi")
+    end
   end
 
   it "stub on object" do 
@@ -29,6 +36,24 @@ describe "Application 'stump-test'" do
     my_mock = mock(:hello, :return => "what fun is this?")
     my_mock.hello.should == "what fun is this?"
   end
+
+  it "should be able to yield a single object" do
+    Hello.mock!(:append_to_string, yield: "qwerty")
+
+    Hello.append_to_string("asdf", "jkl;") do |output|
+      output.should.be == "qwerty"
+    end
+  end
+
+  it "should be able to yield multiple objects" do
+    Hello.mock!(:two_greetings, yield: ["goodbye", "bye"])
+
+    Hello.two_greetings do |one, two|
+      one.should.be == "goodbye"
+      two.should.be == "bye"
+    end
+  end
+    
 
   # class Greeting
   #   def bonjour

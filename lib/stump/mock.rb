@@ -23,6 +23,11 @@ class Object
                     Stump::Mocks.verify([self, method])
                     block.call(*args)
                   end
+                elsif options[:yield]
+                  lambda do |*args|
+                    Stump::Mocks.verify([self, method])
+                    yield(options[:yield])
+                  end
                 else
                   lambda do |*args|                     
                     Stump::Mocks.verify([self, method])
