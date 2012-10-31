@@ -1,7 +1,7 @@
 describe "Application 'stump-test'" do
   class Hello
-    def self.append_to_string(name, to_append, &block)
-      block.call(name + to_append)
+    def self.yield_hello(&block)
+      block.call("hello")
     end
 
     def self.two_greetings(&block)
@@ -38,22 +38,21 @@ describe "Application 'stump-test'" do
   end
 
   it "should be able to yield a single object" do
-    Hello.mock!(:append_to_string, yield: "qwerty")
+    Hello.mock!(:yield_hello, yield: "goodbye")
 
-    Hello.append_to_string("asdf", "jkl;") do |output|
-      output.should.be == "qwerty"
+    Hello.yield_hello do |output|
+      output.should.be == "goodbye"
     end
   end
 
   it "should be able to yield multiple objects" do
     Hello.mock!(:two_greetings, yield: ["goodbye", "bye"])
 
-    Hello.two_greetings do |one, two|
-      one.should.be == "goodbye"
-      two.should.be == "bye"
+    Hello.two_greetings do |a, b|
+      a.should.be == "goodbye"
+      b.should.be == "bye"
     end
   end
-    
 
   # class Greeting
   #   def bonjour
