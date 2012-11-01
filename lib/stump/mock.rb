@@ -37,6 +37,13 @@ class Object
 
     meta_def method, &behavior
   end
+
+  def should_not_call(method)
+    behavior =  lambda do |*args|
+                  should.flunk "Umet expectations: #{method} expected to not be called"
+                end
+    meta_def method, &behavior
+  end
 end
 
 module Kernel
