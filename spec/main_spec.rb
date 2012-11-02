@@ -95,6 +95,18 @@ describe "Application 'stump-test'" do
       end
     end
 
+    it "should succeed if the call is not made" do
+      should.not.raise(Bacon::Error) do
+        @dog.should_not_call(:bark)
+      end
+    end
+
+    it "should not fail in another test" do
+      should.not.raise(Bacon::Error) do
+        @dog.bark
+      end
+    end
+
     it "should raise an error with a class method" do
       Dog.should_not_call(:create)
       should.raise(Bacon::Error) do
