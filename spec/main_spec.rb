@@ -1,45 +1,117 @@
 describe "Application 'stump-test'" do
-  class Hello
+
+  # Test class for mocking.
+  class Dog
+    def self.create
+      return Dog.new
+    end
+
+    def bark
+      "Woof!"
+    end
+
+    def eat(food)
+      "#{food}! Yum!"
+    end
+
+    # Calls the given block on the nearest toy, a stuffed mouse.
+    def get_toy(&block)
+      block.call("stuffed mouse")
+    end
+
+    # Calls the given block on true (for a succesful fetch) and 2 (the time it
+    # took to fetch.
+    def fetch(&block)
+      block.call(true, 20)
+    end
   end
 
-  it "stub on object" do 
-    Hello.stub!(:thing, :return => "hey!")
-    Hello.should.not.be.nil
-    Hello.thing.should == "hey!"
-
-    my_obj = Object.new
-    my_obj.stub!(:hello)
-    my_obj.hello.should.be.nil
+  before do
+    @dog = Dog.new
   end
 
-  it "should create pure stub" do 
-    my_stub = stub(:thing, :return => "dude, a thing!")
-    my_stub.thing.should == "dude, a thing!"
+  describe "#stub!" do
+    it "should stub a class method" do 
+      Dog.stub!(:thing, return: :thing)
+      Dog.should.not.be.nil
+      Dog.thing.should == :thing
+    end
+
+    it "should stub an instance method" do
+      my_obj = Object.new
+      my_obj.stub!(:hello, return: "hi")
+      my_obj.hello.should.be == "hi"
+    end
+  end
+  
+  describe "#stub" do
+    it "should create a pure stub" do
+      my_stub = stub(:thing, return: "dude, a thing!")
+      my_stub.thing.should == "dude, a thing!"
+    end
   end
 
-  it "should mock object" do
-    my_object = "things are fun"
-    my_object.mock!(:fancy, :return => "ooo fancy!")
-    my_object.mock!(:tancy, :return => "ooo tancy!")
-    my_object.fancy.should == 'ooo fancy!'
-    my_object.tancy.should == 'ooo tancy!'
+  describe "#mock!" do
+    it "should mock an instance method on an object" do
+      @dog.mock!(:bark, return: "Meow!")
+      @dog.mock!(:eat, return: "Yuck!")
+      @dog.bark.should == "Meow!"
+      @dog.eat("broccoli").should == "Yuck!"
+    end
+
+    it "should mock a class method" do
+      Dog.mock!(:create, return: "Dog")
+      Dog.create.should == "Dog"
+    end
+
+    it "should be able to yield a single object" do
+      @dog.mock!(:get_toy, yield: "stuffed fox")
+      @dog.get_toy do |toy|
+        toy.should.be == "stuffed fox"
+      end
+    end
+
+    it "should be able to yield multiple objects" do
+      @dog.mock!(:fetch, yield: [false, 10])
+      @dog.fetch do |success, time|
+        success.should.be == success
+        time.should.be == 10
+      end
+    end
   end
 
-  it "should create pure mock" do 
-    my_mock = mock(:hello, :return => "what fun is this?")
-    my_mock.hello.should == "what fun is this?"
+  describe "#mock" do
+    it "should create pure mock" do 
+      my_mock = mock(:hello, return: "hi")
+      my_mock.hello.should == "hi"
+    end
   end
 
-  # class Greeting
-  #   def bonjour
-  #     "Bonjour!"
-  #   end
-  # end
+  describe "#should_not_call" do
+    it "should raise an error with an instance method" do
+      @dog.should_not_call(:bark)
+      should.raise(Bacon::Error) do
+        @dog.bark
+      end
+    end
 
-  # it "should use proxy objects" do 
-  #   greet_me = Greeting.new
-  #   greet_me.proxy!(:bonjour)
-  #   greet_me.bonjour  # => "Bonjour!"
-  # end
+    it "should succeed if the call is not made" do
+      should.not.raise(Bacon::Error) do
+        @dog.should_not_call(:bark)
+      end
+    end
 
+    it "should not fail in another test" do
+      should.not.raise(Bacon::Error) do
+        @dog.bark
+      end
+    end
+
+    it "should raise an error with a class method" do
+      Dog.should_not_call(:create)
+      should.raise(Bacon::Error) do
+        Dog.create
+      end
+    end
+  end
 end

@@ -23,6 +23,11 @@ class Object
                     Stump::Mocks.verify([self, method])
                     block.call(*args)
                   end
+                elsif options[:yield]
+                  lambda do |*args|
+                    Stump::Mocks.verify([self, method])
+                    yield(options[:yield])
+                  end
                 else
                   lambda do |*args|                     
                     Stump::Mocks.verify([self, method])
@@ -30,6 +35,13 @@ class Object
                   end
                 end
 
+    meta_def method, &behavior
+  end
+
+  def should_not_call(method)
+    behavior =  lambda do |*args|
+                  should.flunk "Umet expectations: #{method} expected to not be called"
+                end
     meta_def method, &behavior
   end
 end
