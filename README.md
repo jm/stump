@@ -6,8 +6,6 @@ Stubbing and mocking for RubyMotion. Based on Jeremy McAnally's [stump](https://
 
 ### Stubbing right on the object
 
-Stubing method without parameters:
-
 ```ruby
 MyClass.stub!(:thing, :return => "hey!") # => 'hey!'
 
