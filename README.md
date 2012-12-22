@@ -9,22 +9,18 @@ Stubbing and mocking for RubyMotion. Based on Jeremy McAnally's [stump](https://
 Stubing method without parameters:
 
 ```ruby
-# Returns 'hey!'
-MyClass.stub!(:thing, :return => "hey!")
+MyClass.stub!(:thing, :return => "hey!") # => 'Hey!'
 
-# Returns nil
-your_object.stub!(:hello)
+your_object.stub!(:hello) # => nil
 
 your_object.stub!(:thing) do |arg1, arg2|
  "Hello #{arg1},#{arg2}"
 end
-# Returns 'Hello 1,2'
-MyClass.thing("1", "2")
+MyClass.thing("1", "2") # => 'Hello 1,2'
 
 
 your_object.stub!(:hello, :yield => ["1", "2"])
-# Yield with "1" and "2"
-your_object.hello do |a, b|
+your_object.hello do |a, b| # yield with "1" and "2"
   puts "#{a}, #{b}"
 end
 ```
