@@ -42,12 +42,31 @@ describe "Application 'stump-test'" do
       my_obj.stub!(:hello, return: "hi")
       my_obj.hello.should.be == "hi"
     end
+
+    it "should stub using block" do
+      my_obj = Object.new
+      my_obj.stub!(:hello) do |a, b|
+        a.should == "foo"
+        b.should == "bar"
+        "#{a},#{b}"
+      end
+      my_obj.hello("foo", "bar").should.be == "foo,bar"
+    end
   end
   
   describe "#stub" do
     it "should create a pure stub" do
       my_stub = stub(:thing, return: "dude, a thing!")
       my_stub.thing.should == "dude, a thing!"
+    end
+
+    it "should create a stub using block" do
+      my_stub = stub(:thing) do |a, b|
+        a.should == "a"
+        b.should == "thing!"
+        "dude, #{a} #{b}"
+      end
+      my_stub.thing("a", "thing!").should == "dude, a thing!"
     end
   end
 
@@ -57,6 +76,14 @@ describe "Application 'stump-test'" do
       @dog.mock!(:eat, return: "Yuck!")
       @dog.bark.should == "Meow!"
       @dog.eat("broccoli").should == "Yuck!"
+    end
+
+    it "should mock using block" do
+      @dog.mock!(:bark) do |a|
+        a.should == "Meow!"
+        a
+      end
+      @dog.bark("Meow!").should == "Meow!"
     end
 
     it "should mock a class method" do
