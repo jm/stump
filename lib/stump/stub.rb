@@ -11,7 +11,7 @@ class Object
   #    my_string.retreat!    # => "run away!  run away!"
   #
   def stub!(method_name, options = {}, &stubbed)
-    behavior = (block_given? ? stubbed : proc { return options[:return] })
+    behavior = (block_given? ? stubbed : lambda { return options[:return] })
 
     class << self
       self
