@@ -1,11 +1,7 @@
 class Object
   def safe_meta_def method_name, &block
     metaclass.remember_original_method(method_name)
-    meta_eval {
-      define_method(method_name) {|*args, &block|
-        method_body.call(*args, &block)
-      }
-    }
+    meta_eval { define_method method_name, &block }
   end
 
   def reset(method_name)
