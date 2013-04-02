@@ -6,6 +6,10 @@ describe "Application 'stump-test'" do
       return Dog.new
     end
 
+    def self.kind
+      'Mammal'
+    end
+
     def bark
       "Woof!"
     end
@@ -31,7 +35,7 @@ describe "Application 'stump-test'" do
   end
 
   describe "#stub!" do
-    it "should stub a class method" do 
+    it "should stub a class method" do
       Dog.stub!(:thing, return: :thing)
       Dog.should.not.be.nil
       Dog.thing.should == :thing
@@ -53,7 +57,7 @@ describe "Application 'stump-test'" do
       my_obj.hello("foo", "bar").should.be == "foo,bar"
     end
   end
-  
+
   describe "#stub" do
     it "should create a pure stub" do
       my_stub = stub(:thing, return: "dude, a thing!")
@@ -108,7 +112,7 @@ describe "Application 'stump-test'" do
   end
 
   describe "#mock" do
-    it "should create pure mock" do 
+    it "should create pure mock" do
       my_mock = mock(:hello, return: "hi")
       my_mock.hello.should == "hi"
     end
@@ -138,6 +142,40 @@ describe "Application 'stump-test'" do
       Dog.should_not_call(:create)
       should.raise(Bacon::Error) do
         Dog.create
+      end
+    end
+  end
+
+  describe "#reset" do
+    describe "stubbing" do
+      it "should restore original class method" do
+        Dog.stub!(:kind, return: 'Reptile')
+        Dog.kind.should == 'Reptile'
+        Dog.reset(:kind)
+        Dog.kind.should == 'Mammal'
+      end
+
+      it "should restore original instance method" do
+        @dog.stub!(:bark, return: 'Meow!')
+        @dog.bark.should == 'Meow!'
+        @dog.reset(:bark)
+        @dog.bark.should == 'Woof!'
+      end
+    end
+
+    describe "mocking" do
+      it "should restore original class method" do
+        Dog.mock!(:kind, return: 'Reptile')
+        Dog.kind.should == 'Reptile'
+        Dog.reset(:kind)
+        Dog.kind.should == 'Mammal'
+      end
+
+      it "should restore original instance method" do
+        @dog.mock!(:bark, return: 'Meow!')
+        @dog.bark.should == 'Meow!'
+        @dog.reset(:bark)
+        @dog.bark.should == 'Woof!'
       end
     end
   end

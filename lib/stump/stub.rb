@@ -13,7 +13,7 @@ class Object
   def stub!(method_name, options = {}, &stubbed)
     behavior = (block_given? ? stubbed : lambda { return options[:return] })
 
-    meta_def method_name, &behavior
+    safe_meta_def method_name, &behavior
   end
 end
 
