@@ -13,13 +13,7 @@ class Object
   def stub!(method_name, options = {}, &stubbed)
     behavior = (block_given? ? stubbed : lambda { return options[:return] })
 
-    class << self
-      self
-    end.instance_eval {
-      define_method(method_name) { |*args, &block|
-        behavior.call(*args, &block)
-      }
-    }
+    meta_def method_name, &behavior
   end
 end
 
