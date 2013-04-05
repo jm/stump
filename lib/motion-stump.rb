@@ -20,6 +20,7 @@ Motion::Project::App.setup do |app|
      [
       File.join(File.dirname(__FILE__), 'stump/version.rb'),
       File.join(File.dirname(__FILE__), 'stump/metaid.rb'),
+      File.join(File.dirname(__FILE__), 'stump/metareset.rb'),
       File.join(File.dirname(__FILE__), 'stump/stub.rb'),
       File.join(File.dirname(__FILE__), 'stump/mocks.rb'),
       File.join(File.dirname(__FILE__), 'stump/mock.rb'),

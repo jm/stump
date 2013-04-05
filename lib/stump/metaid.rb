@@ -7,7 +7,11 @@ class Object
 
   # Adds methods to a metaclass
   def meta_def name, &blk
-    meta_eval { define_method name, &blk }
+    meta_eval {
+      define_method(name) {|*args, &block|
+        blk.call(*args, &block)
+      }
+    }
   end
 
   # Defines an instance method within a class
