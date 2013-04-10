@@ -179,4 +179,27 @@ describe "Application 'stump-test'" do
       end
     end
   end
+
+  describe "after each scenario" do
+    it "should verify mocks" do
+      Should.class_eval do
+        def ignored_flunk(message)
+        end
+
+        alias_method :original_flunk, :flunk
+        alias_method :flunk, :ignored_flunk
+      end
+
+      Dog.mock!(:kind, return: 'Reptile')
+      1.should == 1
+    end
+
+    it "should have cleared mocks from the previous scenario" do
+      1.should == 1
+
+      Should.class_eval do
+        alias_method :flunk, :original_flunk
+      end
+    end
+  end
 end

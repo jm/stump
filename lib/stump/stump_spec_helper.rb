@@ -9,17 +9,19 @@ module Stump
       end
 
       def verify_mocks
-        if !Stump::Mocks.failures.nil? && !Stump::Mocks.failures.empty?
-          fails = Stump::Mocks.failures.map {|object, method| "#{object.inspect} expected #{method}"}.join(", ")
-          should.flunk "Unmet expectations: #{fails}"
+        begin
+          if !Stump::Mocks.failures.nil? && !Stump::Mocks.failures.empty?
+            fails = Stump::Mocks.failures.map {|object, method| "#{object.inspect} expected #{method}"}.join(", ")
+            should.flunk "Unmet expectations: #{fails}"
+          end
+        ensure
+          Stump::Mocks.clear!
         end
       end
 
       def it_with_mock_verification(description, &block)
         @after << proc { verify_mocks }
         it_without_mock_verification(description, &block)
-      ensure
-        Stump::Mocks.clear!
       end
     end
   end
