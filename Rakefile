@@ -2,8 +2,7 @@
 require "bundler/gem_tasks"
 
 $:.unshift("/Library/RubyMotion/lib")
-
-require 'motion/project'
+require 'motion/project/template/ios'
 require 'bundler'
 Bundler.setup :default, :development
 require 'motion-stump'

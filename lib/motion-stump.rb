@@ -5,27 +5,18 @@ end
 ## Extend Motion config to include our spec helper
 module Motion; module Project;
   class Config
-    alias_method :spec_files_before_stump, :spec_files
-    def spec_files
-      core = Dir.chdir(motiondir + '/lib/motion') { (['spec.rb'] + Dir.glob(File.join('spec', 'helpers', '*.rb'))).map { |x| File.expand_path(x) } }
-      (core + [File.join(File.dirname(__FILE__), 'stump/stump_spec_helper.rb')] + spec_files_before_stump).uniq
+    alias_method :spec_core_files_without_stump, :spec_core_files
+    def spec_core_files
+      spec_core_files_without_stump + [File.join(File.dirname(__FILE__), 'motion/stump_spec_helper.rb')]
     end
   end
 end; end
 
-
 ## Include stump in dev mode
 Motion::Project::App.setup do |app|
   app.development do
-     [
-      File.join(File.dirname(__FILE__), 'stump/version.rb'),
-      File.join(File.dirname(__FILE__), 'stump/metaid.rb'),
-      File.join(File.dirname(__FILE__), 'stump/metareset.rb'),
-      File.join(File.dirname(__FILE__), 'stump/stub.rb'),
-      File.join(File.dirname(__FILE__), 'stump/mocks.rb'),
-      File.join(File.dirname(__FILE__), 'stump/mock.rb'),
-      File.join(File.dirname(__FILE__), 'stump/proxy.rb'),
-      File.join(File.dirname(__FILE__), 'stump/app_delegate.rb')
-    ].reverse.each {|f| app.files.unshift(f) }
+    stump_lib_dir = File.join(File.dirname(__FILE__), 'stump')
+    stump_files = Dir.glob(stump_lib_dir + "/**/*.rb")
+    app.files.unshift(stump_files)
   end
 end
