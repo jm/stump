@@ -22,6 +22,16 @@ your_object.hello do |a, b| # yield with "1" and "2"
 end
 ```
 
+#### Resetting Stubs
+
+```ruby
+Dog.stub!(:kind, return: 'Reptile')
+Dog.reset(:kind)
+
+@dog.stub!(:bark, return: 'Meow!')
+@dog.reset(:bark)
+```
+
 ### Pure stub objects
 ```ruby
 my_stub = stub(:thing, :return => "dude, a thing!")
@@ -34,7 +44,7 @@ my_stub.thing   # => "dude, a thing!"
 my_object = "things are fun"
 my_object.mock!(:fancy, :return => "ooo fancy!")
 my_object.fancy # => "ooo fancy!"
-my_object.mock!(:tancy, :return => "ooo fancy!")
+my_object.mock!(:fancy, :return => "ooo fancy!")
 
 # if my_object.tancy is not called, it will fail the spec
 ```
