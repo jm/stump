@@ -109,6 +109,14 @@ describe "Application 'stump-test'" do
         time.should.be == 10
       end
     end
+
+    it "should be able to yield the boolean value false" do
+      @dog.mock!(:get_toy, yield: false)
+      @dog.get_toy do |toy|
+        toy.should.be == false
+      end
+    end
+
   end
 
   describe "#mock" do
