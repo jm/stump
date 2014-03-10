@@ -8,6 +8,7 @@ module Stump
 
       def add(mock)
         @mocks ||= []
+        Bacon::Counter[:requirements] += 1
         @mocks << mock
       end
       
