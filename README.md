@@ -46,7 +46,7 @@ my_object.mock!(:fancy, :return => "ooo fancy!")
 my_object.fancy # => "ooo fancy!"
 my_object.mock!(:fancy, :return => "ooo fancy!")
 
-# if my_object.tancy is not called, it will fail the spec
+# if my_object.fancy is not called, it will fail the spec
 ```
 
 ### Pure mock objects
