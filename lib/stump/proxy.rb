@@ -45,10 +45,12 @@ class Object
   
   protected
   def proxy_existing_method(method, options = {}, &block)
-    method_alias = "__old_#{method}"
+    method_alias = "__old_#{method}".to_sym
     
     meta_eval do
-      module_eval("alias #{method_alias} #{method}")
+      module_eval do
+        alias_method method_alias, method
+      end
     end
     
     check_arity = Proc.new do |args|
